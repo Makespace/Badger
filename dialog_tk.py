@@ -23,6 +23,9 @@ from wand.image import Image as WandImage
 import sqlite3 as sqlite
 import sys
 
+from subprocess import call
+
+
 class badger_tk(Tkinter.Tk):
     def __init__(self,parent):
         Tkinter.Tk.__init__(self,parent)
@@ -30,6 +33,9 @@ class badger_tk(Tkinter.Tk):
         self.initialize()
 
     def initialize(self):
+        # turn off screen saver if it's on (relies on xscreensaver being installed)
+        call(["xscreensaver-command", "-deactivate"])
+
         #define place to put temp files (in RAM for speed)
         self.tempFileDir = "/dev/shm/"
 

@@ -232,8 +232,9 @@ class badger_tk(Tkinter.Tk):
                 # clear the "new" field by destroying '* NEW *' label
                 self.newLabel.destroy()
 
+        self.destroy()
 
-        return("break") # prevent propagation of <Return> event -- as a result, focus stays on the button
+        #return("break") # prevent propagation of <Return> event -- as a result, focus stays on the button
 
     def OnPrintButtonClick(self):
     	self.DoPreview() # This is necessary in the case where you click Print without the focus leaving one of the Entry fields.

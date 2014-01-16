@@ -113,7 +113,7 @@ class tagReader():
                     print "- Printing badge for {0}...".format(result[0])
                     self.printBadge(name=result[0],comment = result[1] )
                 else:
-                    call(["killall", "dialog_tk.py"])
+                    subprocess.call(["killall", "dialog_tk.py"])
                     subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])                    
             else:
                 print "not in database"

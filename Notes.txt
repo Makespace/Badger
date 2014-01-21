@@ -1,0 +1,22 @@
+Backup technology
+=================
+http://www.linuxquestions.org/questions/linux-general-1/adding-new-cronjob-41788/
+
+#!/bin/sh
+# filename
+f=cron.$(date +%m%d%Y).tgz
+# make a tarball
+tar -czf /tmp/${f} /var/log/{messages,boot.log,cron,secure}
+# make attachment
+makemime -c -N "${f}" -o /tmp/${f}.msg /tmp/${f}
+# cat attachment 
+cat /tmp/${f}.msg | mail -s "Logs $(date +%m%d%Y)" my@email.dk
+# remove crap
+rm -f /tmp/${f}.msg /tmp/${f}
+# exit w status of last action
+exit $?
+
+
+QR codes
+========
+https://pypi.python.org/pypi/qrcode

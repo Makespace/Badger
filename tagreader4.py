@@ -76,7 +76,8 @@ class tagReader():
     def tryTag(self):
         # test the state of the tag reader,
         # return "None" if no tag present, or tag ID (in binary, four bytes)
-        print self.ser.getRI(), self.ser.getCD() 
+        print self.ser.getRI(), self.ser.getCD()
+        return none
         # We need to send the command soon after CTS becomes active (within 10mS)
         # so wait for that moment:
         while self.ser.getCTS():
@@ -99,6 +100,18 @@ class tagReader():
         # Look for a genuine tag reading, and respond to it once for each touch
         # Debounces both arrival and departure of tag
 
+        # the options for the badge cases
+        def caseNoButtons:
+            print "- Printing badge for {0}...".format(result[0])
+            self.printBadge(name=result[0],comment = result[1] )
+        def caseEditButtons:
+            subprocess.call(["killall", "dialog_tk.py"])
+            subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
+        def caseQrCode:
+            print "we should be printing a QR code here"
+        def caseBusyBadge:
+            print "both buttons pressed. Could this be 'busy' badge?"
+
         tag = self.tryTag()
         if tag == None:
             return None
@@ -109,15 +122,11 @@ class tagReader():
             result= self.lookup(tag)
             print tag.encode('hex'),
             if result != None:
-                if not self.ser.getDSR():
-                    print "- Printing badge for {0}...".format(result[0])
-                    self.printBadge(name=result[0],comment = result[1] )
-                else:
-                    subprocess.call(["killall", "dialog_tk.py"])
-                    subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])                    
+                # do a pythonic case statement...
+                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[read_buttons()]()
             else:
-                print "not in database"
-                #subprocess.Popen(['/home/kim/Ubuntu One/Development/Badger/dialog_tk.py',tag.encode('hex')])
+                print "not in database" # so first time -- get input
+                subprocess.call(["killall", "dialog_tk.py"])
                 subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
 
             # wait until the tag goes away
@@ -125,6 +134,22 @@ class tagReader():
             tagGone = False
             while not tagGone:
                 tagGone = self.tryTag() == None and self.tryTag() == None and self.tryTag() == None # three blanks is convincing tag gone
+
+ 
+    def read_buttons(self):
+        # 0 -- neither button pressed
+        # 1 -- Edit button pressed
+        # 2 -- QR button pressed
+        # 3 -- Both buttons pressed
+
+        buttons = 0
+        self.ser.setDTR(false)
+        if self.ser.getDSR():
+            buttons += 1
+        self.ser.setDTR(true)
+        if self.ser.getDSR():
+            buttons += 2
+        return buttons
 
     def lookup(self,tag):
         with sqlite.connect('badge.db') as con:

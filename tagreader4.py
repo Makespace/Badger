@@ -122,7 +122,7 @@ class tagReader():
             print tag.encode('hex'),
             if result != None:
                 # do a pythonic case statement...
-                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[read_buttons()]()
+                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()
             else:
                 print "not in database" # so first time -- get input
                 subprocess.call(["killall", "dialog_tk.py"])
@@ -142,10 +142,10 @@ class tagReader():
         # 3 -- Both buttons pressed
 
         buttons = 0
-        self.ser.setDTR(false)
+        self.ser.setDTR(False)
         if self.ser.getDSR():
             buttons += 1
-        self.ser.setDTR(true)
+        self.ser.setDTR(True)
         if self.ser.getDSR():
             buttons += 2
         return buttons

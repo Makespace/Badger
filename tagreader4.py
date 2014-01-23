@@ -101,15 +101,15 @@ class tagReader():
         # Debounces both arrival and departure of tag
 
         # the options for the badge cases
-        def caseNoButtons:
+        def caseNoButtons():
             print "- Printing badge for {0}...".format(result[0])
             self.printBadge(name=result[0],comment = result[1] )
-        def caseEditButtons:
+        def caseEditButtons():
             subprocess.call(["killall", "dialog_tk.py"])
             subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
-        def caseQrCode:
+        def caseQrCode():
             print "we should be printing a QR code here"
-        def caseBusyBadge:
+        def caseBusyBadge():
             print "both buttons pressed. Could this be 'busy' badge?"
 
         tag = self.tryTag()

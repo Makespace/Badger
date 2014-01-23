@@ -76,8 +76,7 @@ class tagReader():
     def tryTag(self):
         # test the state of the tag reader,
         # return "None" if no tag present, or tag ID (in binary, four bytes)
-        print self.ser.getRI(), self.ser.getCD()
-        return none
+
         # We need to send the command soon after CTS becomes active (within 10mS)
         # so wait for that moment:
         while self.ser.getCTS():

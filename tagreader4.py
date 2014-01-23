@@ -122,7 +122,7 @@ class tagReader():
             print tag.encode('hex'),
             if result != None:
                 # do a pythonic case statement...
-                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()
+                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.ser.getDSR() & 1]()
             else:
                 print "not in database" # so first time -- get input
                 subprocess.call(["killall", "dialog_tk.py"])

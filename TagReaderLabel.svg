@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="TagReaderLabel.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -62,7 +62,7 @@
        sodipodi:cy="59.058083"
        sodipodi:rx="49.994659"
        sodipodi:ry="45.851456"
-       d="m 208.26505,59.058083 a 49.994659,45.851456 0 1 1 -99.98932,0 49.994659,45.851456 0 1 1 99.98932,0 z"
+       d="m 208.26505,59.058083 c 0,25.323059 -22.38338,45.851457 -49.99466,45.851457 -27.61129,0 -49.99466,-20.528398 -49.99466,-45.851457 0,-25.32306 22.38337,-45.851456 49.99466,-45.851456 27.61128,0 49.99466,20.528396 49.99466,45.851456 z"
        transform="matrix(1.094486,0,0,1.094486,-33.547561,919.22297)" />
     <text
        xml:space="preserve"
@@ -87,65 +87,65 @@
        sodipodi:linespacing="125%"
        id="text2997"
        y="1013.7419"
-       x="46.310539"
+       x="50.310539"
        style="font-size:23.25638962px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        xml:space="preserve"><tspan
          id="tspan3001"
          y="1013.7419"
-         x="46.310539"
+         x="50.310539"
          sodipodi:role="line">Edit</tspan><tspan
          y="1042.8124"
-         x="46.310539"
+         x="50.310539"
          sodipodi:role="line"
          id="tspan3005" /></text>
     <text
        xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="48.676872"
+       style="font-size:12px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="19.487419"
        y="1029.384"
        id="text3007"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3009"
-         x="48.676872"
+         x="19.487419"
          y="1029.384">Hold down,</tspan><tspan
          sodipodi:role="line"
-         x="48.676872"
+         x="19.487419"
          y="1044.384"
          id="tspan3011">then touch tag</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:23.25638962px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="256.31055"
+       x="246.31055"
        y="1013.7419"
        id="text3013"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="256.31055"
+         x="246.31055"
          y="1013.7419"
          id="tspan3015">Print QR</tspan><tspan
          id="tspan3017"
          sodipodi:role="line"
-         x="256.31055"
+         x="246.31055"
          y="1042.8124" /></text>
     <text
        sodipodi:linespacing="125%"
        id="text3019"
        y="1029.384"
-       x="258.67688"
+       x="248.67688"
        style="font-size:12px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        xml:space="preserve"><tspan
          y="1029.384"
-         x="258.67688"
+         x="248.67688"
          id="tspan3021"
          sodipodi:role="line">Hold down,</tspan><tspan
          id="tspan3023"
          y="1044.384"
-         x="258.67688"
+         x="248.67688"
          sodipodi:role="line">then touch tag</tspan></text>
     <path
        transform="matrix(1.1574766,0,0,1.1574766,-43.517114,915.50286)"
-       d="m 208.26505,59.058083 a 49.994659,45.851456 0 1 1 -99.98932,0 49.994659,45.851456 0 1 1 99.98932,0 z"
+       d="m 208.26505,59.058083 c 0,25.323059 -22.38338,45.851457 -49.99466,45.851457 -27.61129,0 -49.99466,-20.528398 -49.99466,-45.851457 0,-25.32306 22.38337,-45.851456 49.99466,-45.851456 27.61128,0 49.99466,20.528396 49.99466,45.851456 z"
        sodipodi:ry="45.851456"
        sodipodi:rx="49.994659"
        sodipodi:cy="59.058083"

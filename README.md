@@ -13,4 +13,8 @@ If necessary, sort out RW access to the tag reader's serial port (the software w
 
 On the Aspire One, we found that gnome-screensaver doesn't correctly reactivate the screen, so we removed it and used xscreensaver instead (you can google how to do that, if you need to.)
 
+empty_badge.db needs to be copied to badge.db. It must exist in the same directory as dialog_tk.py and tagreader4.py.
+
+tagreader4.py is the program you need to have running. It starts the GUI interface (dialog_tk.py) as and when needed.
+
 Contact kim@spencejones.com if you have any questions of suggestions.

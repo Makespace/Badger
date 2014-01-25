@@ -1,13 +1,27 @@
 Badger
 ======
 
-Software for the makespace badge printing mahine
+
+The makespace badge printing mahine
+
+
+##Hardware
+
+The tag hardware is from ib technology:
+
+Universal socket board ( http://www.ibtechnology.co.uk/products/universal-socket-board-product.htm )
+Tag module (http://www.ibtechnology.co.uk/products/hitag2-product.htm)
+
+The printer is a Dymo Label 450
+
+##Software
 
 you'll need...
 
     sudo apt-get install python-tk python-wand
 
-Plug in the Dymo Label 450 printer and install its drivers in the normal way. Set the orientation option to "Landscape".
+Plug in the label printer and install its drivers in the normal way. Set the orientation option to "Landscape".
+
 
 If necessary, sort out RW access to the tag reader's serial port (the software will suggest ways to do that if it can't open the port).
 
@@ -16,5 +30,7 @@ On the Aspire One, we found that gnome-screensaver doesn't correctly reactivate 
 empty_badge.db needs to be copied to badge.db. It must exist in the same directory as dialog_tk.py and tagreader4.py.
 
 tagreader4.py is the program you need to have running. It starts the GUI interface (dialog_tk.py) as and when needed.
+
+
 
 Contact kim@spencejones.com if you have any questions of suggestions.

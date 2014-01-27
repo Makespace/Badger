@@ -2,7 +2,7 @@
 #
 # to make this work:
 #    sudo apt-get install libcups2-dev
-#    (sudo) pip install qrcode pillow cups
+#    (sudo) pip install qrcode pillow pycups
 #    
 # label size 36 x 89 mm @ 300 dpi
 # -> height = 36 * 300/25.4 * 90% ~= 380 px

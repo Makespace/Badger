@@ -15,9 +15,6 @@ from qrcode.constants import *
 
 from subprocess import Popen, PIPE
 
-class test:
-    def one(self):
-        return None
 
 class Do_qr:
     printer_name = "DYMO-LabelWriter-450"

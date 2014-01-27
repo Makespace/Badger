@@ -17,7 +17,7 @@ import subprocess
 from subprocess import Popen, PIPE
 from sys import argv
 
-from do_qr import Do_qr
+#from do_qr import _Do_qr
 
 class sqlGet():
     def __init__(self):
@@ -113,11 +113,11 @@ class tagReader():
             subprocess.call(["killall", "dialog_tk.py"])
             subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
         def caseQrCode():
-            print "Printing a QR code..."
-            Do_qr.print_qr(self,tag.encode('hex'))
-            #p1 = Popen(['qr',tag.encode('hex')], stdout=PIPE)
-            #p2 = Popen(['lp'], stdin=p1.stdout, stdout=PIPE)
-            #p1.stdout.close()
+            #print "Printing a QR code..."
+            #Do_qr.print_qr(self,tag.encode('hex'))
+            p1 = Popen(['qr',tag.encode('hex')], stdout=PIPE)
+            p2 = Popen(['lp'], stdin=p1.stdout, stdout=PIPE)
+            p1.stdout.close()
 
         def caseBusyBadge():
             print "both buttons pressed. Could this be 'busy' badge?"

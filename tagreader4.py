@@ -11,7 +11,11 @@ import cups
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 
+from time import sleep
 import subprocess
+
+from subprocess import Popen, PIPE
+from sys import argv
 
 class sqlGet():
     def __init__(self):
@@ -108,6 +112,10 @@ class tagReader():
             subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
         def caseQrCode():
             print "we should be printing a QR code here"
+            p1 = Popen(['qr',tag.encode('hex')], stdout=PIPE)
+            p2 = Popen(['lp'], stdin=p1.stdout, stdout=PIPE)
+            p1.stdout.close()
+
         def caseBusyBadge():
             print "both buttons pressed. Could this be 'busy' badge?"
 
@@ -122,7 +130,7 @@ class tagReader():
             print tag.encode('hex'),
             if result != None:
                 # do a pythonic case statement...
-                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.ser.getDSR() & 1]()
+                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()
             else:
                 print "not in database" # so first time -- get input
                 subprocess.call(["killall", "dialog_tk.py"])

@@ -24,7 +24,7 @@ class Do_qr:
 
         qr = QRCode(version=None,
                     error_correction=ERROR_CORRECT_H,
-                    box_size=12
+                    box_size=20
                    )
         qr.add_data(data)
 
@@ -33,10 +33,10 @@ class Do_qr:
         # im contains a PIL.Image.Image object
         im = qr.make_image()
         prntr = Popen(["lp", "-s", "-d%s" % self.printer_name], stdin = PIPE, stdout = None, stderr = None)
-
         ## To send it to the printer
         im.save(prntr.stdin)
-
+        # wait for process to do its stuff 
+        prntr.communicate()
 if __name__=="__main__":
     if len(argv) != 2:
         exit("Syntax: do_qr.py {data}")

@@ -9,8 +9,9 @@ The makespace badge printing mahine
 
 The tag hardware is from ib technology:
 
-Universal socket board ( http://www.ibtechnology.co.uk/products/universal-socket-board-product.htm )
-Tag module (http://www.ibtechnology.co.uk/products/hitag2-product.htm)
+Universal socket board: http://www.ibtechnology.co.uk/products/universal-socket-board-product.htm
+
+Tag module: http://www.ibtechnology.co.uk/products/hitag2-product.htm  It seems you need at least v1.1 of the firmware.
 
 The printer is a Dymo Label 450
 

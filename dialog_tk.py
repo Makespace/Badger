@@ -25,6 +25,9 @@ import sys
 
 from subprocess import call
 
+generalLabel = "4777701c"
+doingGeneralLabel = False
+
 
 class badger_tk(Tkinter.Tk):
     def __init__(self,parent):
@@ -33,8 +36,11 @@ class badger_tk(Tkinter.Tk):
         self.initialize()
 
     def initialize(self):
-        # turn off screen saver if it's on (relies on xscreensaver being installed)
-        call(["xscreensaver-command", "-deactivate"])
+        try:
+            # turn off screen saver if it's on (relies on xscreensaver being installed)
+            call(["xscreensaver-command", "-deactivate"])
+        except:
+            print "no screensaver found"
 
         #define place to put temp files (in RAM for speed)
         self.tempFileDir = "/dev/shm/"
@@ -58,26 +64,34 @@ class badger_tk(Tkinter.Tk):
         if tagString != ("00000000"+tagString2)[-8:]:
             print "Bad tag number: ", tagString, ("00000000"+hex(int(tagString,16))[2:-1])[-8:]
             exit(1)
+        elif tagString == generalLabel:
+            # special tag for printing plain labels
+            print "Printing general label"
+            name = comment = ""
+            self.doingGeneralLabel = True
+            self.tagString = tagString ## TODO: may not be needed...
+            self.updating = False
+
         else:
             print "using tagString "+tagString
+            self.doingGeneralLabel = False
             self.tagString = tagString
 
 
-
-        ###################################################################
-        # interrogate the database
-        ###################################################################
-        with sqlite.connect('badge.db') as con:
-            
-            cur = con.cursor()    
-            cur.execute("SELECT Name, Comment FROM Tags WHERE Tag = x'"+self.tagString+"'")
-            result = cur.fetchone()
-            self.updating = result != None
-            if self.updating:
-                name = result[0]
-                comment = result[1]
-            else:
-                name = comment = ""
+            ###################################################################
+            # interrogate the database
+            ###################################################################
+            with sqlite.connect('badge.db') as con:
+                
+                cur = con.cursor()    
+                cur.execute("SELECT Name, Comment FROM Tags WHERE Tag = x'"+self.tagString+"'")
+                result = cur.fetchone()
+                self.updating = result != None
+                if self.updating:
+                    name = result[0]
+                    comment = result[1]
+                else:
+                    name = comment = ""
 
         ###################################################################
         # Create the UI
@@ -88,17 +102,18 @@ class badger_tk(Tkinter.Tk):
         self.bind("<FocusOut>", self.PreviewOnEvent)
 
         # Application title
-        Tkinter.Label(self, anchor="w", text="Makespace badger data update").grid(column=0,row=0,columnspan=3,sticky='EW')
+        Tkinter.Label(self, anchor="w", text="Makespace badger"+ "" if self.doingGeneralLabel else" data update").grid(column=0,row=0,columnspan=3,sticky='EW')
 
         # Tag being edited
-        Tkinter.Label(self,anchor="w", text="Editing tag ").grid(column=0,row=1,sticky='EW')
-        Tkinter.Label(self,anchor="w", text=self.tagString, fg='red').grid(column=1,row=1,sticky='EW')
-        if not self.updating:
-                    self.newLabel = Tkinter.Label(self,anchor="w", text="* NEW *", fg='red')
-                    self.newLabel.grid(column=2,row=1,sticky='EW')
+        Tkinter.Label(self,anchor="w", text="General label" if self.doingGeneralLabel else "Editing tag ").grid(column=0,row=1,sticky='EW')
+        if not self.doingGeneralLabel:
+            Tkinter.Label(self,anchor="w", text=self.tagString, fg='red').grid(column=1,row=1,sticky='EW')
+        if not self.updating and not self.doingGeneralLabel:
+            self.newLabel = Tkinter.Label(self,anchor="w", text="* NEW *", fg='red')
+            self.newLabel.grid(column=2,row=1,sticky='EW')
 
         # name field
-        Tkinter.Label(self,anchor="w", text="Name").grid(column=0,row=2,sticky='EW')
+        Tkinter.Label(self,anchor="w", text="Line 1" if self.doingGeneralLabel else "Name").grid(column=0,row=2,sticky='EW')
 
         self.nameEntry = Tkinter.Entry(self)
         self.nameEntry.grid(column=1,row=2,columnspan=2,sticky='EW')
@@ -110,7 +125,7 @@ class badger_tk(Tkinter.Tk):
 
 
         # comment field
-        Tkinter.Label(self,anchor="w", text="Comment").grid(column=0,row=3,sticky='EW')
+        Tkinter.Label(self,anchor="w", text="Line 2" if self.doingGeneralLabel else "Comment").grid(column=0,row=3,sticky='EW')
 
         self.commentEntry = Tkinter.Entry(self)
         self.commentEntry.grid(column=1,row=3,columnspan=2,sticky='EW')
@@ -127,7 +142,7 @@ class badger_tk(Tkinter.Tk):
         self.previewPane.grid(column=0, columnspan=5,row=5)
 
         # "print" button
-        self.printButton = Tkinter.Button(self,text=u"Save and Print", command=self.OnPrintButtonClick)
+        self.printButton = Tkinter.Button(self,text="Print" if self.doingGeneralLabel else u"Save and Print", command=self.OnPrintButtonClick)
         self.printButton.grid(column=1,row=6, columnspan=2, sticky="")
         self.printButton.bind("<Return>", self.OnPrintEnter)
 
@@ -223,22 +238,25 @@ class badger_tk(Tkinter.Tk):
 
         name=self.nameEntry.get()
         comment = self.commentEntry.get()
-        
-        with sqlite.connect('badge.db') as con:
-            
-            cur = con.cursor()
-            if self.updating:
-                t = (name, comment)
-                # seems you can't use variables in a where clause...
-                cur.execute("UPDATE Tags SET Name=?, Comment=? WHERE Tag=x'"+self.tagString+"'", t)
-            else:
-                t = (name, comment)
-                cur.execute("INSERT INTO Tags VALUES(x'"+self.tagString+"', ?, ?)", t)
-                self.updating = True
-                # clear the "new" field by destroying '* NEW *' label
-                self.newLabel.destroy()
 
-        self.destroy()
+        if app.doingGeneralLabel:
+            pass
+        else:        
+            with sqlite.connect('badge.db') as con:
+                
+                cur = con.cursor()
+                if self.updating:
+                    t = (name, comment)
+                    # seems you can't use variables in a where clause...
+                    cur.execute("UPDATE Tags SET Name=?, Comment=? WHERE Tag=x'"+self.tagString+"'", t)
+                else:
+                    t = (name, comment)
+                    cur.execute("INSERT INTO Tags VALUES(x'"+self.tagString+"', ?, ?)", t)
+                    self.updating = True
+                    # clear the "new" field by destroying '* NEW *' label
+                    self.newLabel.destroy()
+
+            self.destroy()
 
         #return("break") # prevent propagation of <Return> event -- as a result, focus stays on the button
 

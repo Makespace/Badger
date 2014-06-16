@@ -19,6 +19,8 @@ from sys import argv
 
 from do_qr import Do_qr
 
+generalLabel = "4777701c"
+
 class sqlGet():
     def __init__(self):
 
@@ -129,22 +131,26 @@ class tagReader():
         # so we have a real tag
         tag2 = self.tryTag() # read it again
         if tag2 == tag:
-            # we beleive we have a real tag, correctly read, otherwise loop again
-            result= self.lookup(tag)
-            print tag.encode('hex'),
-            if result != None:
-                # do a pythonic case statement...
-                {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()
-            else:
-                print "not in database" # so first time -- get input
-                subprocess.call(["killall", "dialog_tk.py"])
-                subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
+            # we believe we have a real tag, correctly read, otherwise loop again
+            if tag.encode('hex') == generalLabel # we should request text input and print a general label
+                # scope here for reading buttons
+                caseEditButtons()
+            else # handle an individual's tag
+	            result= self.lookup(tag)
+	            print tag.encode('hex'),
+                if result != None:
+                    # do a pythonic case statement...
+                    {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()
+                else:
+                    print "not in database" # so first time -- get input
+                    subprocess.call(["killall", "dialog_tk.py"])
+                    subprocess.Popen(['./dialog_tk.py',tag.encode('hex')])
 
-            # wait until the tag goes away
-            # might have to ignore a couple of "not there"s
-            tagGone = False
-            while not tagGone:
-                tagGone = self.tryTag() == None and self.tryTag() == None and self.tryTag() == None # three blanks is convincing tag gone
+                # wait until the tag goes away
+                # might have to ignore a couple of "not there"s
+                tagGone = False
+                while not tagGone:
+                    tagGone = self.tryTag() == None and self.tryTag() == None and self.tryTag() == None # three blanks is convincing tag gone
 
  
     def read_buttons(self):

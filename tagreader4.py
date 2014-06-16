@@ -132,12 +132,12 @@ class tagReader():
         tag2 = self.tryTag() # read it again
         if tag2 == tag:
             # we believe we have a real tag, correctly read, otherwise loop again
-            if tag.encode('hex') == generalLabel # we should request text input and print a general label
+            if tag.encode('hex') == generalLabel: # we should request text input and print a general label
                 # scope here for reading buttons
                 caseEditButtons()
-            else # handle an individual's tag
-	            result= self.lookup(tag)
-	            print tag.encode('hex'),
+            else: # handle an individual's tag
+                result= self.lookup(tag)
+                print tag.encode('hex'),
                 if result != None:
                     # do a pythonic case statement...
                     {0:caseNoButtons, 1:caseEditButtons, 2:caseQrCode, 3:caseBusyBadge}[self.read_buttons()]()

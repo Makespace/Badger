@@ -2,7 +2,7 @@ Badger
 ======
 
 
-The makespace badge printing mahine
+The makespace badge printing machine
 
 
 ##Hardware
@@ -41,4 +41,4 @@ tagreader4.py is the program you need to have running. It starts the GUI interfa
 do_qr.py contains a class for the qr printing. 
 
 
-Contact kim@spencejones.com if you have any questions of suggestions.
+Contact kim@spencejones.com if you have any questions or suggestions.

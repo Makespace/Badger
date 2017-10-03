@@ -50,7 +50,7 @@ class tagReader():
         # find the tag reader hardware
         # Let's hope no-one plugs in any other USB serial devices!
         try:
-            tagReaderTty = glob('dev/ttyUSB*')[0]
+            tagReaderTty = glob('/dev/ttyUSB*')[0]
         except IndexError:
             print ('Tag reader hardware not found')
             quit()

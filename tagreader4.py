@@ -14,6 +14,8 @@ from reportlab.lib.units import mm
 from time import sleep
 import subprocess
 
+from glob import glob
+
 from subprocess import Popen, PIPE
 from sys import argv
 
@@ -44,9 +46,18 @@ class tagReader():
         print "\x1b[2J\x1b[H"
         print "Tag reader v0.04"
         self.tempFileDir = "/dev/"
+        
+        # find the tag reader hardware
+        # Let's hope no-one plugs in any other USB serial devices!
+        try:
+            tagReaderTty = glob('/dev/ttyUSB*')[0]
+        except IndexError:
+            print ('Tag reader hardware not found')
+            quit()
+        
 
         try:
-            self.ser = serial.Serial('/dev/ttyUSB0',9600, rtscts=1, timeout=0.2)
+            self.ser = serial.Serial(tagReaderTty,9600, rtscts=1, timeout=0.2)
         except IOError as e:
             s=e[0]
             try:
@@ -56,6 +67,7 @@ class tagReader():
                 print "This will give public rw access to all your USB serial ports.\n"
             except:
                 print "Error opening serial port: {0}".format(s)
+            quit()
 
         self.lastTag = None
 
